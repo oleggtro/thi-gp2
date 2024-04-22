@@ -7,4 +7,6 @@ add_executable(Praktikum1_1 main.cpp
         pa1_vertical.cpp
         ufo.cpp
         ufo.h
+        ballistic.cpp
+        ballistic.h
 )
