@@ -2,7 +2,7 @@
 // Created by Ole Donnermeyer on 19.04.24.
 //
 
-#include "vertical.h"
+#include "pa1_vertical.h"
 #include "ufosim.h"
 #include <cmath>
 
