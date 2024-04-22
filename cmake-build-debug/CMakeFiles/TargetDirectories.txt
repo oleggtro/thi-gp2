@@ -1,0 +1,3 @@
+/Users/oledonnermeyer/Documents/coding/GP2/Praktikum1_1/cmake-build-debug/CMakeFiles/Praktikum1_1.dir
+/Users/oledonnermeyer/Documents/coding/GP2/Praktikum1_1/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/oledonnermeyer/Documents/coding/GP2/Praktikum1_1/cmake-build-debug/CMakeFiles/rebuild_cache.dir
