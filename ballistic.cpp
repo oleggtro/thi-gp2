@@ -7,8 +7,7 @@
 #include <complex>
 
 
-Ballistic::Ballistic(float takeOff, float landing) : Ufo("r2d2") {
-
+Ballistic::Ballistic(const string &Id, float takeOff,  float landing) : Ufo(Id) {
 
     if ((takeOff <= 0 ) || (takeOff > 90)) {
         takeOff = 45;
@@ -23,6 +22,11 @@ Ballistic::Ballistic(float takeOff, float landing) : Ufo("r2d2") {
 }
 
 Ballistic::~Ballistic() = default;
+
+float Ballistic::getTakeOffAngle() const {
+    return takeOffAngle;
+}
+
 
 float Ballistic::getLandingAngle() const {
     return landingAngle;

@@ -53,8 +53,3 @@ float Ufo::angle(const float x1, const float y1, const float x2, const float y2)
 
 
 
-void Vertical::flyToDest(const float x, const float y, const float height, const int speed) const override {
-    sim->flyTo(sim->getX(), sim->getY(), height, speed, 0);
-    sim->flyTo(x, y, height, speed, 0);
-    sim->flyTo(x, y, 0, speed, 0);
-}

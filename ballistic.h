@@ -12,13 +12,13 @@
 using namespace std;
 
 
-class Ballistic : Ufo {
+class Ballistic : public Ufo {
 protected:
     float takeOffAngle;
     float landingAngle;
 
 public:
-    Ballistic(float takeOff, float landing);
+    Ballistic(const string& id, float takeOff, float landing);
     ~Ballistic();
     float getTakeOffAngle() const;
     float getLandingAngle() const;
