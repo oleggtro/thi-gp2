@@ -6,8 +6,14 @@
 #define BALLISTIC_H
 
 
-class Ballistic {
-private:
+#include <vector>
+
+#include "ufo.h"
+using namespace std;
+
+
+class Ballistic : Ufo {
+protected:
     float takeOffAngle;
     float landingAngle;
 
@@ -16,6 +22,10 @@ public:
     ~Ballistic();
     float getTakeOffAngle() const;
     float getLandingAngle() const;
+
+    std::vector<float> firstWaypoint(const float x, const float y, const float height) const;
+    std::vector<float> secondWaypoint(const float x, const float y, const float height) const;
+    void flyToDest(const float x, const float y, const float height, const int speed) const;
 };
 
 

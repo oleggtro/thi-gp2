@@ -4,8 +4,12 @@
 
 #include "ballistic.h"
 
+#include <complex>
 
-Ballistic::Ballistic(float takeOff, float landing) {
+
+Ballistic::Ballistic(float takeOff, float landing) : Ufo("r2d2") {
+
+
     if ((takeOff <= 0 ) || (takeOff > 90)) {
         takeOff = 45;
     }
@@ -24,8 +28,53 @@ float Ballistic::getLandingAngle() const {
     return landingAngle;
 }
 
-float Ballistic::getTakeOffAngle() const {
-    return takeOffAngle;
+  vector<float> Ballistic::firstWaypoint(const float x, const float y, const float height) const {
+    float t = height / tan(takeOffAngle);
+
+    float dx = x - sim->getX();
+    float dy = y - sim->getY();
+
+
+    float norm = sqrt(pow(dx, 2) + pow(dy, 2));
+
+    float ndx = dx / norm;
+    float ndy = dy / norm;
+
+
+
+    return {sim->getX() + (ndx * t),sim->getY() + (ndy * t), height};
+}
+
+  vector<float> Ballistic::secondWaypoint(const float x, const float y, const float height) const {
+    float t = height / tan(landingAngle);
+
+    float dx = x - sim->getX();
+    float dy = y - sim->getY();
+
+
+    float norm = sqrt(pow(dx, 2) + pow(dy, 2));
+
+    float ndx = dx / norm;
+    float ndy = dy / norm;
+
+    return {sim->getX() - (ndx * t),sim->getY() - (ndy * t), height};
 }
 
 
+
+
+
+void Ballistic::flyToDest(const float x, const float y, const float height, const int speed) const {
+    vector<float> vec = {};
+    //locate first waypoint
+    vec = firstWaypoint(x, y, height);
+    sim->flyTo(vec[0], vec[1], vec[2], speed, speed);
+
+    //onto second
+    vec = secondWaypoint(x, y, height);
+    sim->flyTo(vec[0], vec[1], vec[2], speed, speed); // vpost = speed => dont stop after reaching point
+
+    //fly to target point
+    sim->flyTo(x, y, height, speed, speed);
+
+}

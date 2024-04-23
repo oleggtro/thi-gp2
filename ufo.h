@@ -14,9 +14,9 @@ using namespace std;
 
 
 class Ufo {
-    string id;
     protected:
     Ufosim* sim;
+    string id;
 
 
 public:
