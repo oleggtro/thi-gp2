@@ -16,3 +16,13 @@ void Vertical::flyToDest(const float x, const float y, const float height, const
     sim->flyTo(x, y, height, speed, 0);
     sim->flyTo(x, y, 0, speed, 0);
 }
+
+float Vertical::distance(const float x1, const float y1, const float x2, const float y2, const float h) {
+    float dx = x2 - x1;
+    float dy = y2 - y1;
+
+    // missing: handle two other flight segments
+    float length = sqrt(dx * dx + dy * dy);
+
+    return length;
+}
