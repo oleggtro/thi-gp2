@@ -5,6 +5,7 @@
 #include "ballistic.h"
 
 #include <complex>
+#include <iostream>
 
 
 Ballistic::Ballistic(const string &Id, float takeOff,  float landing) : Ufo(Id) {
@@ -33,35 +34,49 @@ float Ballistic::getLandingAngle() const {
 }
 
   vector<float> Ballistic::firstWaypoint(const float x, const float y, const float height) const {
-    float t = height / tan(takeOffAngle);
+
 
     float dx = x - sim->getX();
     float dy = y - sim->getY();
 
-
+    float rad = takeOffAngle * M_PI / 180;
+    float t = height / tan(rad);
     float norm = sqrt(pow(dx, 2) + pow(dy, 2));
 
-    float ndx = dx / norm;
-    float ndy = dy / norm;
+    float perc = t  / norm;
 
 
+    vector<float> vec = { ( dx * perc) + sim->getX(),( dy * perc) + sim->getY()};
 
-    return {sim->getX() + (ndx * t),sim->getY() + (ndy * t), height};
+    cout << "vec: " << vec[0] << " " << vec[1] << endl;
+
+    return vec;
 }
 
   vector<float> Ballistic::secondWaypoint(const float x, const float y, const float height) const {
-    float t = height / tan(landingAngle);
-
-    float dx = x - sim->getX();
-    float dy = y - sim->getY();
 
 
-    float norm = sqrt(pow(dx, 2) + pow(dy, 2));
+    // calc top part of triangle
+    float a = height / tan(landingAngle * M_PI / 180);
 
-    float ndx = dx / norm;
-    float ndy = dy / norm;
+    vector<float> first_w = firstWaypoint(x, y, height);
 
-    return {sim->getX() - (ndx * t),sim->getY() - (ndy * t), height};
+
+    float v_d_x = x - first_w[0];
+    float v_d_y = y - first_w[1];
+
+    float len = sqrt(pow(v_d_x, 2) + pow(v_d_y, 2));
+
+    float n_v_d_x = v_d_x / len;
+    float n_v_d_y = v_d_y / len;
+
+    float multiplier = len - a;
+
+    float x2 = first_w[0] + (n_v_d_x * multiplier);
+    float y2 = first_w[1] + (n_v_d_y * multiplier);
+
+
+    return {x2,y2};
 }
 
 
@@ -69,16 +84,15 @@ float Ballistic::getLandingAngle() const {
 
 
 void Ballistic::flyToDest(const float x, const float y, const float height, const int speed) const {
-    vector<float> vec = {};
+    vector<float> vec1 = firstWaypoint(x, y, height);
+    vector<float> vec2 = secondWaypoint(x, y, height);
+
     //locate first waypoint
-    vec = firstWaypoint(x, y, height);
-    sim->flyTo(vec[0], vec[1], vec[2], speed, speed);
+    sim->flyTo(vec1[0], vec1[1], height, speed, speed);
 
     //onto second
-    vec = secondWaypoint(x, y, height);
-    sim->flyTo(vec[0], vec[1], vec[2], speed, speed); // vpost = speed => dont stop after reaching point
+    sim->flyTo(vec2[0], vec2[1], height, speed, speed); // vpost = speed => dont stop after reaching point
 
     //fly to target point
-    sim->flyTo(x, y, height, speed, speed);
-
+    sim->flyTo(x, y, 0, speed, 0);
 }

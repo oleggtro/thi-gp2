@@ -11,4 +11,5 @@ add_executable(Praktikum1_1 main.cpp
         vertical.h
         vertical.h
         vertical.cpp
+        pa2_utest.cpp
 )
