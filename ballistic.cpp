@@ -5,7 +5,6 @@
 #include "ballistic.h"
 
 #include <complex>
-#include <iostream>
 
 
 Ballistic::Ballistic(const string &Id, float takeOff,  float landing) : Ufo(Id) {
@@ -33,7 +32,7 @@ float Ballistic::getLandingAngle() const {
     return landingAngle;
 }
 
-  vector<float> Ballistic::firstWaypoint(const float x, const float y, const float height) const {
+vector<float> Ballistic::firstWaypoint(const float x, const float y, const float height) const {
 
 
     float dx = x - sim->getX();
@@ -48,7 +47,6 @@ float Ballistic::getLandingAngle() const {
 
     vector<float> vec = { ( dx * perc) + sim->getX(),( dy * perc) + sim->getY()};
 
-    cout << "vec: " << vec[0] << " " << vec[1] << endl;
 
     return vec;
 }
@@ -62,11 +60,14 @@ float Ballistic::getLandingAngle() const {
     vector<float> first_w = firstWaypoint(x, y, height);
 
 
+    // calc vector to second waypoint
+    // bottom to bottom (only dir)
     float v_d_x = x - first_w[0];
     float v_d_y = y - first_w[1];
 
     float len = sqrt(pow(v_d_x, 2) + pow(v_d_y, 2));
 
+    //normalize vector
     float n_v_d_x = v_d_x / len;
     float n_v_d_y = v_d_y / len;
 
@@ -78,9 +79,6 @@ float Ballistic::getLandingAngle() const {
 
     return {x2,y2};
 }
-
-
-
 
 
 void Ballistic::flyToDest(const float x, const float y, const float height, const int speed) const {

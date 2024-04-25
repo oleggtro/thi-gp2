@@ -7,9 +7,7 @@
 #include <cmath>
 using namespace std;
 
-Vertical::Vertical(const std::string& pId) : Ufo(pId) {
-}
-
+Vertical::Vertical(const std::string& pId) : Ufo(pId) {}
 
 void Vertical::flyToDest(const float x, const float y, const float height, const int speed) const {
     sim->flyTo(sim->getX(), sim->getY(), height, speed, 0);
@@ -21,8 +19,10 @@ float Vertical::distance(const float x1, const float y1, const float x2, const f
     float dx = x2 - x1;
     float dy = y2 - y1;
 
-    // missing: handle two other flight segments
     float length = sqrt(dx * dx + dy * dy);
+
+    // account for raising up and landing
+    length += h * 2;
 
     return length;
 }

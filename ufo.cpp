@@ -17,7 +17,6 @@ Ufo::~Ufo() {
     delete sim;
 }
 
-
 const string & Ufo::getId() const {
     return id;
 }

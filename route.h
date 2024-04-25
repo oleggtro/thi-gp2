@@ -17,15 +17,13 @@ class Route {
 
 
 public:
-    Route(float pHeigth, float (*fn_dist)(const float x1, const float x2, const float y1, const float y2, const float h));
+    Route(const float pHeigth, float (*fn_dist)(const float x1, const float x2, const float y1, const float y2, const float h));
     ~Route();
 
     void add(const float destX, const float destY);
     const vector<pair<float,float>>& getDestinations() const;
     float getHeight() const;
     void setHeight(const float height);
-    // generate a function setDist that takes a function pointer as an argument
-
     void setDist(float (*dist)(const float x1, const float x2, const float y1, const float y2, const float h));
     float distance() const;
     void shortestRoute();

@@ -274,11 +274,12 @@ BOOST_AUTO_TEST_CASE(route)
         BOOST_CHECK(fabs(route.getDestinations()[3].first + 115.0) < 0.001);
         BOOST_CHECK(fabs(route.getDestinations()[3].second - 95.0) < 0.001);
     }
-
+    cout << "route distance: " << fabs(route.distance()) << endl;
     BOOST_CHECK(fabs(route.distance() - 837.848) < 0.001);
 
     route.shortestRoute();
     BOOST_CHECK(size(route.getDestinations()) == 4);
+    cout << "route distance: " << fabs(route.distance()) << endl;
     BOOST_CHECK(fabs(route.distance() - 559.015) < 0.001);
 }
 
