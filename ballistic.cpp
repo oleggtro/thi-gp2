@@ -7,18 +7,19 @@
 #include <complex>
 
 
-Ballistic::Ballistic(const string &Id, float takeOff,  float landing) : Ufo(Id) {
+Ballistic::Ballistic(const string &Id, const float takeOff, const float landing) : Ufo(Id) {
 
     if ((takeOff <= 0 ) || (takeOff > 90)) {
-        takeOff = 45;
+        takeOffAngle = 45;
+    } else {
+        takeOffAngle = takeOff;
     }
 
     if ((landing <= 0 ) || (landing > 90)) {
-        landing = 45;
+        landingAngle = 45;
+    } else {
+        landingAngle = landing;
     }
-
-    takeOffAngle = takeOff;
-    landingAngle = landing;
 }
 
 Ballistic::~Ballistic() = default;

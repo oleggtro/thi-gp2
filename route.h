@@ -10,7 +10,7 @@ using namespace std;
 
 class Route {
     private:
-    vector<pair<float, float>> destinations;
+    vector<pair<float, float>> *destinations;
     float height;
 
     float (*dist)(float x1, float x2, float y1, float y2, float h);

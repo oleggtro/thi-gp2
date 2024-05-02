@@ -18,14 +18,14 @@ protected:
     float landingAngle;
 
 public:
-    Ballistic(const string& id, float takeOff, float landing);
+    Ballistic(const string& id, const float takeOff, const float landing);
     ~Ballistic();
     float getTakeOffAngle() const;
     float getLandingAngle() const;
 
     std::vector<float> firstWaypoint(const float x, const float y, const float height) const;
     std::vector<float> secondWaypoint(const float x, const float y, const float height) const;
-    void flyToDest(const float x, const float y, const float height, const int speed) const;
+    void flyToDest(const float x, const float y, const float height, const int speed) const override;
 };
 
 

@@ -22,7 +22,7 @@ class Ufo {
 public:
     Ufo(const string& pId);
     virtual ~Ufo();
-    static string getType();
+    //static string getType();
     const string& getId() const;
 
     vector<float> getPosition() const;
