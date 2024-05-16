@@ -3,6 +3,8 @@ project(Praktikum1_1)
 
 set(CMAKE_CXX_STANDARD 20)
 
+include_directories("/opt/homebrew/Cellar/boost/1.85.0/include")
+
 add_executable(Praktikum1_1
         ufo.cpp
         ufo.h

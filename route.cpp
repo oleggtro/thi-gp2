@@ -3,7 +3,9 @@
 //
 
 #include "route.h"
+#include <math.h>
 #include <algorithm>
+#include <limits>
 
 
 Route::Route(const float pHeigth,
@@ -14,7 +16,7 @@ Route::Route(const float pHeigth,
 }
 
 Route::~Route() {
-    destinations->clear();
+    delete destinations;
 }
 
 void Route::add(const float destX, const float destY) {
@@ -71,7 +73,7 @@ void Route::shortestRoute() {
 
     vector<pair<float, float>> best_route = *destinations;
 
-    sort(destinations->begin(), destinations->end());
+    std::sort(destinations->begin(), destinations->end());
 
     //set min distance to max value, so that on first iteration the first route will be the best
     float shortest_route = numeric_limits<float>::max();
@@ -79,18 +81,8 @@ void Route::shortestRoute() {
     do {
         float t_dist = 0.0;
 
-        // to first waypoint
-        t_dist += dist(0.0, 0.0, destinations->at(0).first,  destinations->at(0).second, height);
-
-        // tmp var to save previous dest for for each loop
-        pair<float, float> prev_dest = destinations->front();
-        for (auto dest : *destinations) {
-            if (prev_dest == dest) continue;
-            t_dist += dist(prev_dest.first, prev_dest.second, dest.first, dest.second, height);
-        }
-
         // back to start
-        t_dist += dist(destinations->back().first, destinations->back().second, 0,  0, height);
+        t_dist = distance();
 
         // check of current route is better than previously best route. if yes, overwrite
         if (t_dist < shortest_route) {

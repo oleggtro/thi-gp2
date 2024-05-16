@@ -98,7 +98,7 @@ BOOST_AUTO_TEST_CASE(ufo_angle)
     BOOST_CHECK(fabs(Ufo::angle(-1.0, -1.0, -1.9, 30.0) - 358.337) < 0.001);
 }
 
-BOOST_AUTO_TEST_CASE(ballistic_angles)
+/*BOOST_AUTO_TEST_CASE(ballistic_angles)
 {
     Ballistic ball("ball", 45.0, 70.0);
     BOOST_CHECK(ball.getTakeOffAngle() == 45.0);
@@ -111,6 +111,29 @@ BOOST_AUTO_TEST_CASE(ballistic_angles)
     Ballistic ball3("ball3", 275.0, 90.0001);
     BOOST_CHECK(ball3.getTakeOffAngle() == 45.0);
     BOOST_CHECK(ball3.getLandingAngle() == 45.0);
+}*/
+
+BOOST_AUTO_TEST_CASE(ballistic_angles)
+{
+    Ballistic ball1("ball1", -10.0, 60.0);
+    BOOST_CHECK(ball1.getTakeOffAngle() == 45.0);
+    BOOST_CHECK(ball1.getLandingAngle() == 60.0);
+
+    Ballistic ball2("ball2", 0.0, 90.0);
+    BOOST_CHECK(ball2.getTakeOffAngle() == 45.0);
+    BOOST_CHECK(ball2.getLandingAngle() == 90.0);
+
+    Ballistic ball3("ball3", 35.0, 90.0001);
+    BOOST_CHECK(ball3.getTakeOffAngle() == 35.0);
+    BOOST_CHECK(ball3.getLandingAngle() == 45.0);
+
+    Ballistic ball4("ball4", 90.0, 0.0);
+    BOOST_CHECK(ball4.getTakeOffAngle() == 90.0);
+    BOOST_CHECK(ball4.getLandingAngle() == 45.0);
+
+    Ballistic ball5("ball5", 275.0, -5.0);
+    BOOST_CHECK(ball5.getTakeOffAngle() == 45.0);
+    BOOST_CHECK(ball5.getLandingAngle() == 45.0);
 }
 
 BOOST_AUTO_TEST_CASE(ballistic_polymorphism)
@@ -274,13 +297,32 @@ BOOST_AUTO_TEST_CASE(route)
         BOOST_CHECK(fabs(route.getDestinations()[3].first + 115.0) < 0.001);
         BOOST_CHECK(fabs(route.getDestinations()[3].second - 95.0) < 0.001);
     }
-    cout << "route distance: " << fabs(route.distance()) << endl;
+
     BOOST_CHECK(fabs(route.distance() - 837.848) < 0.001);
 
     route.shortestRoute();
     BOOST_CHECK(size(route.getDestinations()) == 4);
-    cout << "route distance: " << fabs(route.distance()) << endl;
     BOOST_CHECK(fabs(route.distance() - 559.015) < 0.001);
+}
+
+BOOST_AUTO_TEST_CASE(route2)
+{
+    Route route(10.0, &Vertical::distance);
+    BOOST_CHECK(size(route.getDestinations()) == 0);
+    route.add(8.0, 100.0);
+    BOOST_CHECK(size(route.getDestinations()) == 1);
+    route.add(7.0, -100.0);
+    BOOST_CHECK(size(route.getDestinations()) == 2);
+    route.add(5, -100.0);
+    BOOST_CHECK(size(route.getDestinations()) == 3);
+    route.add(6.0, 100.0);
+    BOOST_CHECK(size(route.getDestinations()) == 4);
+
+    BOOST_CHECK(fabs(route.distance() - 702.504) < 0.001);
+
+    route.shortestRoute();
+    BOOST_CHECK(size(route.getDestinations()) == 4);
+    BOOST_CHECK(fabs(route.distance() - 504.307) < 0.001);
 }
 
 BOOST_AUTO_TEST_CASE(route_empty)
